@@ -12,12 +12,11 @@ def a_plus_abs_b(a, b):
     >>> re.findall(r'^\s*(return .*)', inspect.getsource(a_plus_abs_b), re.M)
     ['return h(a, b)']
     """
-    def h(a,b):
-        if b >= 0:
-            he = a + b
-        else:
-            he = a - b
-        return he
+def h(a,b):
+    if b >= 0:
+        h = add
+    else:
+        he = sub
     return h(a, b)
 
 
