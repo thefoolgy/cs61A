@@ -1,3 +1,6 @@
+from re import X
+
+
 HW_SOURCE_FILE=__file__
 
 
@@ -12,6 +15,13 @@ def pascal(row, column):
     3
     """
     "*** YOUR CODE HERE ***"
+    if row == 0 == column:
+        return 1
+    elif row == 0:
+        return 0
+    else:
+        return pascal(row-1, column-1) + pascal(row-1,column)
+    
 
 
 def compose1(f, g):
@@ -40,7 +50,18 @@ def repeated(f, n):
     True
     """
     "*** YOUR CODE HERE ***"
-
+    def func(x):
+        if n == 0:
+            return x
+        else:
+            x = f(x)
+            return repeated(f,n-1)(x)
+    return func
+#   better solution:
+#   if n == 0:
+#        return lambda x: x
+#    else:
+#        return compose1(f, repeated(f,n-1))
 
 def num_eights(x):
     """Returns the number of times 8 appears as a digit of x.
@@ -64,6 +85,18 @@ def num_eights(x):
     True
     """
     "*** YOUR CODE HERE ***"
+    if x == 0:
+        return 0
+    elif x % 10 == 8:
+        return num_eights(x //10) + 1
+    else:
+        return num_eights(x//10)
+# pku solution
+#   if x == 0:
+#        return 0
+#    else:
+#        return num_eights(x//10)+(x%10 == 8)
+
 
 
 def pingpong(n):
@@ -99,4 +132,15 @@ def pingpong(n):
     True
     """
     "*** YOUR CODE HERE ***"
+    def helper(value, index, direction):
+        if index == n:
+            return value
+        if index%8 == 0 or num_eights(index)>0:
+            return helper(value - direction, index + 1, direction * -1 )
+        else:
+            return helper(value + direction, index + 1, direction)
+    return helper(1,1,1)
+
+
+
 
