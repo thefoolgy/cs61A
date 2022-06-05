@@ -1,3 +1,6 @@
+from lzma import FILTER_LZMA2
+
+
 this_file = __file__
 
 
@@ -17,7 +20,20 @@ def make_adder_inc(a):
     11
     """
     "*** YOUR CODE HERE ***"
+    c = 0
+    def g(b):
+        nonlocal c
+        sum = a + b + c
+        c = c + 1
+        return sum
+    return g
 
+#pku solution    
+#    def adder(a):
+#        nonlocal a
+#        a = a + 1
+#        return a + b - 1
+#    return adder
 
 def make_fib():
     """Returns a function that returns the next Fibonacci number
@@ -43,6 +59,29 @@ def make_fib():
     True
     """
     "*** YOUR CODE HERE ***"
+    n = -1
+    f0,f1 = 0,1
+    def g():
+        nonlocal n
+        n += 1
+        if n == 0:
+            return 0
+        elif n == 1:
+            return 1
+        else:
+            nonlocal f0,f1
+            f = f0 + f1
+            f0 = f1
+            f1 = f
+            return f
+    return g
+#pku solution
+#   f1,f2 = 1,0
+#   def fib():
+#       nonlocal f1,f2
+#       f1,f2 = f2,f1+f2 
+#       return f1
+#   return fib
 
 
 def insert_items(lst, entry, elem):
@@ -62,4 +101,14 @@ def insert_items(lst, entry, elem):
     True
     """
     "*** YOUR CODE HERE ***"
+    j = 1
+    lst1 = lst[:]
+    for i in range(len(lst1)):
+        if lst1[i] == entry:
+            lst.insert(i+j,elem)
+            j += 1
+    return lst
+
+
+
 
