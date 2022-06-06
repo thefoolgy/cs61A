@@ -176,9 +176,16 @@ def num_trees(n):
     429
 
     """
-    if n == 1 or n ==0:
-        return 1
-    return num_trees(n-1)*2*(2*n-3)//n
+    #dynamic programming ###recursion memorization
+    lst = [1,1]
+    for i in range(2,n):
+        lst.append(0)
+        for j in range(i):
+            lst[i] += lst[j]*lst[i-j-1]
+    return lst[n-1]
+#    if n == 1 or n ==0:
+#        return 1
+#    return num_trees(n-1)*2*(2*n-3)//n
 
 
 def make_advanced_counter_maker():
