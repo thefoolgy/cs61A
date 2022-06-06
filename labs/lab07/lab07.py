@@ -1,3 +1,6 @@
+from typing import Counter
+
+
 def insert_into_all(item, nested_list):
     """Assuming that nested_list is a list of lists, return a new list
     consisting of all the lists in nested_list, but with item added to
@@ -217,13 +220,39 @@ def make_advanced_counter_maker():
     >>> tom_counter('global-count')
     1
     """
-    ________________
-    def ____________(__________):
-        ________________
-        def ____________(__________):
-            ________________
-            "*** YOUR CODE HERE ***"
-            # as many lines as you want
-        ________________
-    ________________
-
+    g_count = 0
+    def make_counter():
+        nonlocal g_count
+        count = 0
+        def counter(message):
+            nonlocal g_count
+            if message == 'count':
+                return dispatch['count']()
+            elif message == 'global-count':
+                return dispatch['global_count']()
+            elif message == 'reset':
+                return dispatch['reset']()
+            elif message == 'global-reset':
+                return dispatch['global_reset']()
+        def count_call():
+            nonlocal count
+            count += 1
+            return count
+        def global_count_call():
+            nonlocal g_count
+            g_count += 1
+            return g_count
+        def reset_call():
+            nonlocal count
+            count = 0
+        def global_reset_call():
+            nonlocal g_count
+            g_count = 0
+        dispatch = {
+            'count': count_call,
+            'global_count': global_count_call,
+            'reset': reset_call,
+            'global_reset': global_reset_call,
+        }
+        return counter
+    return make_counter
