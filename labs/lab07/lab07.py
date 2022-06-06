@@ -7,7 +7,12 @@ def insert_into_all(item, nested_list):
     >>> insert_into_all(0, nl)
     [[0], [0, 1, 2], [0, 3]]
     """
-    return ______________________________
+    #my solution:
+    #for i in nested_list:
+    #    i.insert(0,item)
+    # return nested_list
+    #official solution
+    return [[item] + i for i in nested_list]
 
 def subseqs(s):
     """Assuming that S is a list, return a nested list of all subsequences
@@ -19,11 +24,12 @@ def subseqs(s):
     >>> subseqs([])
     [[]]
     """
-    if ________________:
-        ________________
+    #official solution
+    if s == []:
+        return [[]]
     else:
-        ________________
-        ________________
+        subset = subseqs(s[1:])
+        return subset + insert_into_all(s[0],subset)
 
 
 def inc_subseqs(s):
@@ -40,16 +46,17 @@ def inc_subseqs(s):
     >>> sorted(seqs2)
     [[], [1], [1], [1, 1], [1, 1, 2], [1, 2], [1, 2], [2]]
     """
+    #offcial solution
     def subseq_helper(s, prev):
         if not s:
-            return ____________________
+            return [[]]
         elif s[0] < prev:
-            return ____________________
+            return subseq_helper(s[1:],prev)
         else:
-            a = ______________________
-            b = ______________________
-            return insert_into_all(________, ______________) + ________________
-    return subseq_helper(____, ____)
+            a = subseq_helper(s[1:], s[0])
+            b = subseq_helper(s[1:], prev)
+            return insert_into_all(s[0], a) + b
+    return subseq_helper(s, 0)
 
 
 def trade(first, second):
@@ -81,9 +88,9 @@ def trade(first, second):
     """
     m, n = 1, 1
 
-    equal_prefix = lambda: ______________________
-    while _______________________________:
-        if __________________:
+    equal_prefix = lambda: sum(first[:m]) == sum(second[:n])
+    while m <= min(len(first),len(second)) and not equal_prefix():
+        if sum(first[:m]) < sum(second[:n]):
             m += 1
         else:
             n += 1
@@ -108,6 +115,11 @@ def reverse(lst):
     [-8, 72, 42]
     """
     "*** YOUR CODE HERE ***"
+    new_lst = []
+    while len(lst) > 0:
+        a = lst.pop()
+        new_lst.append(a)
+    return new_lst
 
 
 cs61a = {
@@ -135,6 +147,13 @@ def make_glookup(class_assignments):
     0.8913043478260869
     """
     "*** YOUR CODE HERE ***"
+    total, your_grade = 0,0
+    def g(assignments,grade):
+        nonlocal class_assignments, total, your_grade
+        total = total + class_assignments[assignments]
+        your_grade = your_grade + grade
+        return your_grade / total
+    return g
 
 
 def num_trees(n):
@@ -157,9 +176,9 @@ def num_trees(n):
     429
 
     """
-    if ____________________:
-        return _______________
-    return _______________
+    if n == 1 or n ==0:
+        return 1
+    return num_trees(n-1)*2*(2*n-3)//n
 
 
 def make_advanced_counter_maker():
