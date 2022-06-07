@@ -197,7 +197,16 @@ def make_joint(withdraw, old_pass, new_pass):
     "Too many incorrect attempts. Attempts: ['my', 'secret', 'password']"
     """
     "*** YOUR CODE HERE ***"
-
+    check  = withdraw(0,old_pass)
+    if type(check) == str:
+        return check
+    def joint(amount_j, input_pass):
+        nonlocal old_pass, new_pass
+        if input_pass == new_pass:
+            return withdraw(amount_j, old_pass)
+        else:
+            return withdraw(amount_j, input_pass)
+    return joint
 
 def remainders_generator(m):
     """
@@ -231,6 +240,16 @@ def remainders_generator(m):
     11
     """
     "*** YOUR CODE HERE ***"
+    #pku solution:
+    def remainder(n):
+        while True:
+            for natural in naturals():
+                yield natural*m + n
+    yield remainder(0)
+    for i in range(-m+1, 0):
+        yield remainder(i)
+    
+
 
 
 def naturals():
